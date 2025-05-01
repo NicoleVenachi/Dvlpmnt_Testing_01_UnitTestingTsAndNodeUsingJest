@@ -13,43 +13,89 @@ describe("Utils test suite", () => {
     expect(actual).toBe(expected);
   });
 
-  it.only("should return info for a valid string", () => {
-    // arrange:
-    const sut = getStringInfo;
+  describe("getStrringInfo for arg My-string should", () => {
+    it("return right lenght", () => {
+      // arrange:
+      const sut = getStringInfo;
 
-    // act:
-    const actual = sut("My-String");
+      // act:
+      const actual = sut("My-String");
 
-    // assert:
-    expect(actual.lowerCase).toBe("my-string");
-    expect(actual.extraInfo).toEqual({});
+      //assert
+      expect(actual.characters).toHaveLength(9);
+    });
 
-    expect(actual.characters.length).toBe(9);
-    expect(actual.characters).toHaveLength(9);
+    it("return right lower case", () => {
+      // arrange:
+      const sut = getStringInfo;
 
-    expect(actual.characters).toEqual([
-      "M",
-      "y",
-      "-",
-      "S",
-      "t",
-      "r",
-      "i",
-      "n",
-      "g",
-    ]);
+      // act:
+      const actual = sut("My-String");
 
-    expect(actual.characters).toContain<string>("M");
+      // assert:
+      expect(actual.lowerCase).toBe("my-string");
+    });
 
-    // valitate inner array regardless of the order
-    expect(actual.characters).toEqual(
-      expect.arrayContaining(["S", "t", "r", "i", "n", "g", "M", "y", "-"])
-    );
+    it("return right upper case", () => {
+      // arrange:
+      const sut = getStringInfo;
 
-    //check for undefined (in this case it is an {} can't be undefined)
-    expect(actual.extraInfo).not.toBe(undefined);
-    expect(actual.extraInfo).not.toBeUndefined();
-    expect(actual.extraInfo).toBeDefined();
-    expect(actual.extraInfo).toBeTruthy();
+      // act:
+      const actual = sut("My-String");
+
+      // assert:
+      expect(actual.upperCase).toBe("MY-STRING");
+    });
+
+    it("return right charachters", () => {
+      // arrange:
+      const sut = getStringInfo;
+
+      // act:
+      const actual = sut("My-String");
+
+      // assert:
+      expect(actual.characters).toEqual([
+        "M",
+        "y",
+        "-",
+        "S",
+        "t",
+        "r",
+        "i",
+        "n",
+        "g",
+      ]);
+
+      expect(actual.characters).toContain<string>("M");
+
+      // valitate inner array regardless of the order
+      expect(actual.characters).toEqual(
+        expect.arrayContaining(["S", "t", "r", "i", "n", "g", "M", "y", "-"])
+      );
+    });
+
+    it("return defined extra info", () => {
+      // arrange:
+      const sut = getStringInfo;
+
+      // act:
+      const actual = sut("My-String");
+
+      // assert:
+      //check for undefined (in this case it is an {} can't be undefined)
+      expect(actual.extraInfo).toBeDefined();
+    });
+
+    it("return right extra info", () => {
+      // arrange:
+      const sut = getStringInfo;
+
+      // act:
+      const actual = sut("My-String");
+
+      // assert:
+      expect(actual.extraInfo).toEqual({});
+    });
   });
 });
