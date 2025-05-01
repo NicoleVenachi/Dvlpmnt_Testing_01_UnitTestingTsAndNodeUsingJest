@@ -98,4 +98,19 @@ describe("Utils test suite", () => {
       expect(actual.extraInfo).toEqual({});
     });
   });
+
+  describe("ToUpperCase examples", () => {
+    //arrange
+    it.each([
+      { input: "abc", expected: "ABC" },
+      { input: "My-String", expected: "MY-STRING" },
+      { input: "def", expected: "DEF" },
+    ])("$input to upercha should be $expected", ({ input, expected }) => {
+      //act
+      const actual = toUpperCase(input);
+
+      //assert
+      expect(actual).toBe(expected);
+    });
+  });
 });
