@@ -1,3 +1,12 @@
+export class StringUtils {
+  /**
+   * name
+   */
+  public toUpperCase(arg: string) {
+    return toUpperCase(arg);
+  }
+}
+
 export function toUpperCase(arg: string) {
   return arg.toUpperCase();
 }
