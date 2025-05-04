@@ -3,6 +3,8 @@ export class StringUtils {
    * name
    */
   public toUpperCase(arg: string) {
+    if (!arg) throw new Error("Invalid argument");
+
     return toUpperCase(arg);
   }
 }
