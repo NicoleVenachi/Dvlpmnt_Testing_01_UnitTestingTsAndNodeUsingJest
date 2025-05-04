@@ -8,7 +8,7 @@ export class StringUtils {
     return toUpperCase(arg);
   }
 }
-
+/* istanbul ignore next */
 export function toUpperCase(arg: string) {
   return arg.toUpperCase();
 }
@@ -21,6 +21,7 @@ export type stringInfo = {
   extraInfo?: Object;
 };
 
+/* istanbul ignore next */
 export function getStringInfo(arg: string) {
   return {
     lowerCase: arg.toLowerCase(),

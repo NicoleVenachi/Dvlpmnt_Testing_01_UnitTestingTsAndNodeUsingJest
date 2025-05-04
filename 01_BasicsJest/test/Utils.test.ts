@@ -25,7 +25,7 @@ describe("Utils test suite", () => {
 
     it.todo("Test long strings");
 
-    it.concurrent("Should throw error on invalid argument - function", () => {
+    it("Should throw error on invalid argument - function", () => {
       // act:
       function expectError() {
         const actual = sut.toUpperCase("");
@@ -43,7 +43,7 @@ describe("Utils test suite", () => {
       }).toThrow();
     });
 
-    fit("Should throw error on invalid argument - try-catch block", (done) => {
+    it("Should throw error on invalid argument - try-catch block", (done) => {
       try {
         sut.toUpperCase("");
         done("GetStringInfo should thorw error for invalid arg!");
