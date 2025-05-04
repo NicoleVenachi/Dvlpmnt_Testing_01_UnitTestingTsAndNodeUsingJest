@@ -15,7 +15,7 @@ describe("Utils test suite", () => {
       console.log("Teardown");
     });
 
-    it("Should return correct upper case", () => {
+    it.skip("Should return correct upper case", () => {
       // act:
       const actual = sut.toUpperCase("abc");
 
@@ -23,7 +23,9 @@ describe("Utils test suite", () => {
       expect(actual).toBe("ABC");
     });
 
-    it("Should throw error on invalid argument - function", () => {
+    it.todo("Test long strings");
+
+    it.concurrent("Should throw error on invalid argument - function", () => {
       // act:
       function expectError() {
         const actual = sut.toUpperCase("");
@@ -34,14 +36,14 @@ describe("Utils test suite", () => {
       expect(expectError).toThrowError("Invalid argument");
     });
 
-    it("Should throw error on invalid argument - arrow function", () => {
+    xit("Should throw error on invalid argument - arrow function", () => {
       // act-assert:
       expect(() => {
         sut.toUpperCase("");
       }).toThrow();
     });
 
-    it.only("Should throw error on invalid argument - try-catch block", (done) => {
+    fit("Should throw error on invalid argument - try-catch block", (done) => {
       try {
         sut.toUpperCase("");
         done("GetStringInfo should thorw error for invalid arg!");
