@@ -1,4 +1,7 @@
-import { PasswordChecker } from "../../app/pass_checker/PasswordChecker";
+import {
+  PasswordChecker,
+  PasswordErrors,
+} from "../../app/pass_checker/PasswordChecker";
 
 describe("PasswordChecker test suite", () => {
   let sut: PasswordChecker;
@@ -13,23 +16,25 @@ describe("PasswordChecker test suite", () => {
     const actual = sut.checkPassword("1234567");
 
     //assert
-    expect(actual).toBe(false);
+    expect(actual.valid).toBe(false);
+    expect(actual.reasons).toContain(PasswordErrors.SHORT);
   });
 
-  it("Password should have at least 8 characters", () => {
+  it("Password should have at least 8 characters to be valid", () => {
     //act
     const actual = sut.checkPassword("12345678Ac");
 
     //assert
-    expect(actual).toBe(true);
+    expect(actual.reasons).not.toContain(PasswordErrors.SHORT);
   });
 
   it("Password with no upper case is invalid", () => {
     //act
-    const actual = sut.checkPassword("12345abcd");
+    const actual = sut.checkPassword("abcd");
 
     //assert
-    expect(actual).toBe(false);
+    expect(actual.valid).toBe(false);
+    expect(actual.reasons).toContain(PasswordErrors.NO_UPPER_CASE);
   });
 
   it("Password should contain upper case to be valid", () => {
@@ -37,7 +42,7 @@ describe("PasswordChecker test suite", () => {
     const actual = sut.checkPassword("12345abcdA");
 
     //assert
-    expect(actual).toBe(true);
+    expect(actual.reasons).not.toContain(PasswordErrors.NO_UPPER_CASE);
   });
 
   it("Password with no lower case is invalid", () => {
@@ -45,14 +50,24 @@ describe("PasswordChecker test suite", () => {
     const actual = sut.checkPassword("12345BCDER");
 
     //assert
-    expect(actual).toBe(false);
+    expect(actual.valid).toBe(false);
+    expect(actual.reasons).toContain(PasswordErrors.NO_LOWER_CASE);
   });
 
   it("Password should contain lower case to be valid", () => {
     //act
-    const actual = sut.checkPassword("12345abcdA");
+    const actual = sut.checkPassword("abcdA");
 
     //assert
-    expect(actual).toBe(true);
+    expect(actual.reasons).not.toContain(PasswordErrors.NO_LOWER_CASE);
+  });
+
+  it("Complex Password is valid", () => {
+    //act
+    const actual = sut.checkPassword("1234aVbasd");
+
+    //assert
+    expect(actual.valid).toBe(true);
+    expect(actual.reasons).toHaveLength(0);
   });
 });
