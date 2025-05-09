@@ -1,3 +1,14 @@
 export class PasswordChecker {
-  public checkPassword() {}
+  public checkPassword(password: string): boolean {
+    if (password.length < 8) {
+      return false;
+    }
+    if (password.toLowerCase() === password) {
+      return false;
+    }
+    if (password.toUpperCase() === password) {
+      return false;
+    }
+    return true;
+  }
 }
