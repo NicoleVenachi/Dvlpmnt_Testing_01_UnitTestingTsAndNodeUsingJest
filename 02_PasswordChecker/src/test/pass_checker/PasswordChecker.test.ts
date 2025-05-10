@@ -70,4 +70,21 @@ describe("PasswordChecker test suite", () => {
     expect(actual.valid).toBe(true);
     expect(actual.reasons).toHaveLength(0);
   });
+
+  it("Admim Password with no number is invalid ", () => {
+    //act
+    const actual = sut.checkAdminPassword("abcd");
+
+    //assert
+    expect(actual.valid).toBe(false);
+    expect(actual.reasons).toContain(PasswordErrors.NO_NUMBER);
+  });
+
+  it("Admim Password should contain numbers to be valid ", () => {
+    //act
+    const actual = sut.checkAdminPassword("abcd12");
+
+    //assert
+    expect(actual.reasons).not.toContain(PasswordErrors.NO_NUMBER);
+  });
 });

@@ -2,6 +2,7 @@ export enum PasswordErrors {
   SHORT = "Password is to short!",
   NO_UPPER_CASE = "Upper case letter required!",
   NO_LOWER_CASE = "Lower case letter required!",
+  NO_NUMBER = "At least one number required",
 }
 
 export interface CheckResult {
@@ -10,28 +11,52 @@ export interface CheckResult {
 }
 
 export class PasswordChecker {
-  reasons: PasswordErrors[] = [];
-
   public checkPassword(password: string): CheckResult {
-    if (password.length < 8) {
-      this.reasons.push(PasswordErrors.SHORT);
-    }
-    if (password.toLowerCase() === password) {
-      this.reasons.push(PasswordErrors.NO_UPPER_CASE);
-    }
-    if (password.toUpperCase() === password) {
-      this.reasons.push(PasswordErrors.NO_LOWER_CASE);
-    }
-
-    console.log({
-      valid: this.reasons.length > 0 ? false : true,
-      reasons: this.reasons,
-      password,
-    });
+    const reasons: PasswordErrors[] = [];
+    this.checkForLength(password, reasons);
+    this.checkForLowerCase(password, reasons);
+    this.checkForUperCase(password, reasons);
 
     return {
-      valid: this.reasons.length > 0 ? false : true,
-      reasons: this.reasons,
+      valid: reasons.length > 0 ? false : true,
+      reasons: reasons,
     };
+  }
+
+  public checkAdminPassword(password: string): CheckResult {
+    const basicCheck = this.checkPassword(password);
+    this.checkForNumber(password, basicCheck.reasons);
+
+    return {
+      ...basicCheck,
+      valid: basicCheck.reasons.length > 0 ? false : true,
+    };
+  }
+
+  private checkForNumber(password: string, reasons: PasswordErrors[]) {
+    const hasNumber = /\d/;
+    console.log("asasd", hasNumber.test(password));
+
+    if (!hasNumber.test(password)) {
+      reasons.push(PasswordErrors.NO_NUMBER);
+    }
+  }
+
+  private checkForLength(password: string, reasons: PasswordErrors[]) {
+    if (password.length < 8) {
+      reasons.push(PasswordErrors.SHORT);
+    }
+  }
+
+  private checkForLowerCase(password: string, reasons: PasswordErrors[]) {
+    if (password.toLowerCase() === password) {
+      reasons.push(PasswordErrors.NO_UPPER_CASE);
+    }
+  }
+
+  private checkForUperCase(password: string, reasons: PasswordErrors[]) {
+    if (password.toUpperCase() === password) {
+      reasons.push(PasswordErrors.NO_LOWER_CASE);
+    }
   }
 }
